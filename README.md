@@ -1,8 +1,139 @@
-# Hello World
+# Design Inspiration Figma Plugin
+
+A Figma plugin that helps designers find and add design inspiration directly to their canvas. Search and filter inspiration from popular design platforms like Dribbble, Behance, Pinterest, and Unsplash.
+
+## ✨ Features
+
+- 🔍 **Search** design inspiration with keywords
+- 🎨 **Filter by source** (Dribbble, Behance, Pinterest, Unsplash)
+- 🖼️ **Preview images** in a clean grid layout
+- ✅ **Select multiple images** and add them to your canvas
+- 🎯 **Automatic organization** - images are placed in frames with attribution
+- 🧹 **Auto-clear selections** after pasting
+
+## 🚀 How to Install & Use
+
+### Step 1: Download the Code
+
+1. Click the green **"Code"** button on this GitHub page
+2. Select **"Download ZIP"**
+3. Extract the ZIP file to a folder on your computer (like your Desktop)
+
+### Step 2: Install Required Software
+
+You'll need to install Node.js (don't worry, it's free and easy):
+
+1. Go to [nodejs.org](https://nodejs.org)
+2. Download the **LTS version** (recommended for most users)
+3. Run the installer and follow the prompts
+4. Restart your computer after installation
+
+### Step 3: Set Up the Plugin
+
+1. Open **Terminal** (Mac) or **Command Prompt** (Windows)
+
+   - **Mac**: Press `Cmd + Space`, type "Terminal", press Enter
+   - **Windows**: Press `Windows key + R`, type "cmd", press Enter
+
+2. Navigate to your downloaded folder:
+
+   ```bash
+   cd path/to/your/downloaded/folder
+   ```
+
+   💡 **Tip**: You can drag the folder from Finder/Explorer into Terminal to get the path
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Build the plugin:
+   ```bash
+   npm run build
+   ```
+
+### Step 4: Install in Figma
+
+1. Open the **Figma Desktop App** (not the web version)
+
+   - Download it from [figma.com/downloads](https://figma.com/downloads) if you don't have it
+
+2. Open any Figma document
+
+3. Open the **Quick Actions** menu:
+
+   - **Mac**: Press `Cmd + /`
+   - **Windows**: Press `Ctrl + /`
+
+4. Search for **"Import plugin from manifest"** and select it
+
+5. Navigate to your plugin folder and select the **`manifest.json`** file
+
+6. The plugin is now installed! 🎉
+
+### Step 5: Use the Plugin
+
+1. In Figma, open Quick Actions again (`Cmd + /` or `Ctrl + /`)
+2. Search for **"Design Inspiration Plugin"** and click it
+3. The plugin panel will open on the right side
+4. Start searching for inspiration and adding images to your canvas!
+
+## 🔧 Development Mode (Optional)
+
+If you want to make changes to the plugin:
+
+1. Run the watch command to automatically rebuild when you make changes:
+
+   ```bash
+   npm run watch
+   ```
+
+2. In Figma, you can reload the plugin by:
+   - Closing the plugin panel
+   - Re-running it from Quick Actions
+
+## 🐛 Troubleshooting
+
+**Plugin not showing up in Figma?**
+
+- Make sure you're using the Figma Desktop App, not the web version
+- Try restarting Figma after installing the plugin
+
+**"Command not found" error?**
+
+- Make sure Node.js is properly installed
+- Restart your Terminal/Command Prompt
+- Try running `node --version` to check if Node.js is installed
+
+**Build failed?**
+
+- Make sure you're in the correct folder (the one with `package.json`)
+- Try deleting `node_modules` folder and running `npm install` again
+
+**Images not loading?**
+
+- This is expected - the plugin uses mock data for demonstration
+- In a real implementation, you'd need a backend service to fetch real images
+
+## 📝 Note
+
+This plugin currently uses mock data for demonstration purposes. For production use, you would need to implement a backend service to fetch real images from design platforms while respecting their terms of service and API limits.
+
+## 🛠️ Built With
+
+- [Create Figma Plugin](https://yuanqing.github.io/create-figma-plugin/)
+- TypeScript
+- HTML/CSS/JavaScript
+
+## 📄 License
+
+This project is for educational and demonstration purposes.
 
 ## Development guide
 
-*This plugin is built with [Create Figma Plugin](https://yuanqing.github.io/create-figma-plugin/).*
+_This plugin is built with [Create Figma Plugin](https://yuanqing.github.io/create-figma-plugin/)._
 
 ### Pre-requisites
 
