@@ -18,6 +18,7 @@
     ],
     "id": "design-inspiration-plugin",
     "name": "Design Inspiration Plugin",
-    "main": "code.ts"
+    "main": "code.ts",
+    "ui": "ui.ts"
   }
 }

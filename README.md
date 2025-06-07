@@ -1,121 +1,156 @@
 # Design Inspiration Figma Plugin
 
-A Figma plugin that helps designers find and add design inspiration directly to their canvas. Search and filter inspiration from popular design platforms like Dribbble, Behance, Pinterest, and Unsplash.
+A Figma plugin that allows you to search for design inspiration and add images directly to your canvas with proper attribution.
 
-## ✨ Features
+## 🏗️ Architecture
 
-- 🔍 **Search** design inspiration with keywords
-- 🎨 **Filter by source** (Dribbble, Behance, Pinterest, Unsplash)
-- 🖼️ **Preview images** in a clean grid layout
-- ✅ **Select multiple images** and add them to your canvas
-- 🎯 **Automatic organization** - images are placed in frames with attribution
-- 🧹 **Auto-clear selections** after pasting
+This repository contains **only the Figma plugin frontend**. The plugin communicates with a separate backend service for web scraping functionality.
 
-## 🚀 How to Install & Use
+### Repository Structure
 
-### Step 1: Download the Code
+- **Plugin Repository** (this repo): Contains the Figma plugin UI and logic
+- **Backend Repository**: [`figma-design-scraper-backend`](../figma-design-scraper-backend/) - Contains the Node.js API service
 
-1. Click the green **"Code"** button on this GitHub page
-2. Select **"Download ZIP"**
-3. Extract the ZIP file to a folder on your computer (like your Desktop)
+## 🚀 Setup Instructions
 
-### Step 2: Install Required Software
+### 1. Start the Backend Service
 
-You'll need to install Node.js (don't worry, it's free and easy):
+First, make sure the backend service is running:
 
-1. Go to [nodejs.org](https://nodejs.org)
-2. Download the **LTS version** (recommended for most users)
-3. Run the installer and follow the prompts
-4. Restart your computer after installation
+```bash
+# Navigate to the backend directory
+cd ../figma-design-scraper-backend
 
-### Step 3: Set Up the Plugin
+# Install dependencies (if not already done)
+npm install
 
-1. Open **Terminal** (Mac) or **Command Prompt** (Windows)
+# Start the development server
+npm run dev
+```
 
-   - **Mac**: Press `Cmd + Space`, type "Terminal", press Enter
-   - **Windows**: Press `Windows key + R`, type "cmd", press Enter
+The backend will run on `http://localhost:3001`
 
-2. Navigate to your downloaded folder:
+### 2. Build the Plugin
 
-   ```bash
-   cd path/to/your/downloaded/folder
-   ```
+In this directory, build the plugin:
 
-   💡 **Tip**: You can drag the folder from Finder/Explorer into Terminal to get the path
+```bash
+# Install dependencies
+npm install
 
-3. Install dependencies:
+# Build the plugin
+npm run build
+```
 
-   ```bash
-   npm install
-   ```
+Or for development with auto-rebuild:
 
-4. Build the plugin:
-   ```bash
-   npm run build
-   ```
+```bash
+npm run watch
+```
 
-### Step 4: Install in Figma
+### 3. Load the Plugin in Figma
 
-1. Open the **Figma Desktop App** (not the web version)
+1. Open Figma Desktop App
+2. Go to **Plugins** → **Development** → **Import plugin from manifest**
+3. Select the `manifest.json` file from this directory
+4. The plugin will appear in your plugins list
 
-   - Download it from [figma.com/downloads](https://figma.com/downloads) if you don't have it
+## 🎯 How to Use
 
-2. Open any Figma document
+1. **Start the backend service** (step 1 above)
+2. **Open the plugin** in Figma from the Plugins menu
+3. **Search for designs** using terms like:
+   - "modern dashboard"
+   - "mobile app UI"
+   - "fintech interface"
+   - "e-commerce design"
+4. **Select images** by clicking on them
+5. **Paste to canvas** using the "Paste Selected Images" button
 
-3. Open the **Quick Actions** menu:
+## 🔧 Development
 
-   - **Mac**: Press `Cmd + /`
-   - **Windows**: Press `Ctrl + /`
+### File Structure
 
-4. Search for **"Import plugin from manifest"** and select it
+```
+├── code.ts           # Main plugin logic (runs in Figma sandbox)
+├── ui.ts            # UI logic and interface
+├── package.json     # Plugin configuration and dependencies
+├── manifest.json    # Figma plugin manifest (auto-generated)
+└── build/           # Built files (auto-generated)
+    ├── main.js      # Compiled main logic
+    └── ui.js        # Compiled UI
+```
 
-5. Navigate to your plugin folder and select the **`manifest.json`** file
+### Key Technologies
 
-6. The plugin is now installed! 🎉
+- **TypeScript**: For type safety and better development experience
+- **@create-figma-plugin/utilities**: For Figma plugin development utilities
+- **Figma Plugin API**: For interacting with Figma canvas
 
-### Step 5: Use the Plugin
+### Communication Flow
 
-1. In Figma, open Quick Actions again (`Cmd + /` or `Ctrl + /`)
-2. Search for **"Design Inspiration Plugin"** and click it
-3. The plugin panel will open on the right side
-4. Start searching for inspiration and adding images to your canvas!
+1. **UI** (ui.ts) sends search requests via `emit('SEARCH_DESIGNS', data)`
+2. **Main** (code.ts) receives requests via `on('SEARCH_DESIGNS', handler)`
+3. **Main** makes HTTP requests to backend API (`localhost:3001`)
+4. **Main** sends results back to UI via `emit('SEARCH_RESULTS', data)`
+5. **UI** displays results and handles user interactions
 
-## 🔧 Development Mode (Optional)
+## 🌐 Backend API
 
-If you want to make changes to the plugin:
+The plugin expects the backend to provide:
 
-1. Run the watch command to automatically rebuild when you make changes:
+**Endpoint**: `GET /api/scrape-design`
 
-   ```bash
-   npm run watch
-   ```
+**Parameters**:
 
-2. In Figma, you can reload the plugin by:
-   - Closing the plugin panel
-   - Re-running it from Quick Actions
+- `query` (required): Search term
+- `page` (optional): Page number for pagination
 
-## 🐛 Troubleshooting
+**Response**:
 
-**Plugin not showing up in Figma?**
+```json
+{
+  "designs": [
+    {
+      "imageUrl": "https://example.com/image.jpg",
+      "attribution": "Design by Artist Name",
+      "sourceUrl": "https://source-website.com"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "totalPages": 5,
+    "hasMore": true
+  }
+}
+```
 
-- Make sure you're using the Figma Desktop App, not the web version
-- Try restarting Figma after installing the plugin
+## 📝 Notes
 
-**"Command not found" error?**
+- The backend must be running on `localhost:3001` for the plugin to work
+- Images are fetched and embedded directly into Figma as image fills
+- All images include proper attribution in the layer names
+- Multiple selected images are positioned with slight offsets to avoid overlap
 
-- Make sure Node.js is properly installed
-- Restart your Terminal/Command Prompt
-- Try running `node --version` to check if Node.js is installed
+## 🛠️ Troubleshooting
 
-**Build failed?**
+### Plugin Won't Load
 
-- Make sure you're in the correct folder (the one with `package.json`)
-- Try deleting `node_modules` folder and running `npm install` again
+- Ensure `npm run build` completed successfully
+- Check that `build/main.js` and `build/ui.js` exist
+- Verify the `manifest.json` is present
 
-**Images not loading?**
+### API Connection Issues
 
-- This is expected - the plugin uses mock data for demonstration
-- In a real implementation, you'd need a backend service to fetch real images
+- Ensure the backend service is running on `localhost:3001`
+- Check browser console for CORS or network errors
+- Verify the backend API is responding at `/api/scrape-design`
+
+### Build Errors
+
+- Run `npm install` to ensure all dependencies are installed
+- Check TypeScript errors with `npm run build`
+- Ensure you're using Node.js 14+ and npm 7+
 
 ## 📝 Note
 
