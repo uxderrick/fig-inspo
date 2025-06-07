@@ -1,0 +1,10 @@
+{
+  "extends": "@create-figma-plugin/tsconfig",
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["ES2017", "DOM"],
+    "typeRoots": ["node_modules/@figma", "node_modules/@types"],
+    "skipLibCheck": true
+  },
+  "include": ["*.ts", "*.tsx", "src/**/*.ts", "src/**/*.tsx"]
+}

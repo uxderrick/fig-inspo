@@ -1,0 +1,10 @@
+cursor.rules
+
+- Always provide complete, runnable code files for each requested component (e.g., manifest.json, code.ts, ui.html).
+- Use TypeScript for all plugin logic (`code.ts`).
+- Prioritize clean, readable, and well-commented code that follows Figma plugin development best practices.
+- Clearly separate concerns between the UI and the plugin logic.
+- Explicitly state where external dependencies (like a backend for scraping) would be integrated.
+- Ensure all necessary imports and basic setup for a Figma plugin are included.
+- When generating UI code (HTML/CSS), keep it functional and easy to understand, avoiding overly complex styling.
+- Acknowledge and reinforce the requirement for a backend service for web scraping functionality.
